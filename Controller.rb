@@ -1,6 +1,6 @@
 class Controller
   attr_writer :brewedTableView
-
+	attr_accessor :progress
 
 	def awakeFromNib
 		@formulas = []
@@ -8,15 +8,24 @@ class Controller
 		get_brewed_formulas
 		@brewed.each {|f| @formulas << f }
     @brewedTableView.dataSource = self
-
-		#get_unbrewed_formulas
   end
 	
 	
   def addFormula(sender)
+		dialog = NSOpenPanel.openPanel
+		dialog.canChooseFiles = true
+		dialog.canChooseDirectories = false
+		dialog.allowsMultipleSelection = false
+			 
+		if dialog.runModalForDirectory("/usr/local/Library/Formula", file:nil) == NSOKButton
+			@selected_file = dialog.filenames.first.split("/").last.gsub!(/.rb/, "")
+		end
+		
+		@version = %x(/usr/local/bin/brew info #{@selected_file}).split("\n")[0].split(" ")[1]
+		
 		new_formula = Formula.new
-    new_formula.formula = 'Brewery'
-    new_formula.version = '0.1'
+    new_formula.formula = @selected_file
+    new_formula.version = @version
     @formulas << new_formula
     @brewedTableView.reloadData
   end
@@ -65,11 +74,13 @@ class Controller
 
 	
 	def brew_update(sender)
+		@progress.startAnimation(nil)
 		message = %x(brew update)
 		alert = NSAlert.new
 		alert.messageText = message
 		alert.alertStyle = NSInformationalAlertStyle
     alert.addButtonWithTitle("OK")
+		@progress.stopAnimation(nil)
     response = alert.runModal
 	end
 	
