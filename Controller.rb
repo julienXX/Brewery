@@ -1,12 +1,15 @@
 class Controller
-  attr_writer :formulasTableView
+  attr_writer :brewedTableView
 
 
 	def awakeFromNib
 		@formulas = []
+		
 		get_brewed_formulas
 		@brewed.each {|f| @formulas << f }
-    @formulasTableView.dataSource = self
+    @brewedTableView.dataSource = self
+
+		#get_unbrewed_formulas
   end
 	
 	
@@ -15,14 +18,14 @@ class Controller
     new_formula.formula = 'Brewery'
     new_formula.version = '0.1'
     @formulas << new_formula
-    @formulasTableView.reloadData
+    @brewedTableView.reloadData
   end
 	
 	
 	def removeFormula(sender)
-		if @formulasTableView.numberOfSelectedRows != 0
-			@formulas.delete_at(@formulasTableView.selectedRow)
-			@formulasTableView.reloadData
+		if @brewedTableView.numberOfSelectedRows != 0
+			@formulas.delete_at(@brewedTableView.selectedRow)
+			@brewedTableView.reloadData
 		end
 	end
 	
@@ -44,6 +47,22 @@ class Controller
 		return @brewed
 	end
 	
+
+	def get_unbrewed_formulas
+    formulas = %x(ls /usr/local/Library/Formula).split("\n")
+		@unbrewed = Array.new
+		
+    formulas.each do |f|
+			@uninstalled = Formula.new
+			f.gsub!(/.rb/,"")
+			@uninstalled.formula = f
+			@uninstalled.version = "tbd"
+			@unbrewed << @uninstalled
+    end
+		puts @unbrewed
+		return @unbrewed
+	end
+
 	
 	def brew_update(sender)
 		message = %x(brew update)
@@ -67,7 +86,7 @@ class Controller
         formula.formula
       when 'version'
         formula.version
-    end
+		end
   end
 end
 
