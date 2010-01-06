@@ -9,6 +9,7 @@ class Controller
     @formulasTableView.dataSource = self
   end
 	
+	
   def addFormula(sender)
 		new_formula = Formula.new
     new_formula.formula = 'Brewery'
@@ -17,28 +18,14 @@ class Controller
     @formulasTableView.reloadData
   end
 	
-	def removeFormula(sender)
-		@formulas.delete_at(@formulasTableView.selectedRow)
-		@formulasTableView.reloadData
-	end
 	
-	def browse(sender)
-		# Create the File Open Dialog class.
-		dialog = NSOpenPanel.openPanel
-		# Disable the selection of files in the dialog.
-		dialog.canChooseFiles = false
-		# Enable the selection of directories in the dialog.
-		dialog.canChooseDirectories = true
-		# Disable the selection of multiple items in the dialog.
-		dialog.allowsMultipleSelection = false
-	 
-		# Display the dialog and process the selected folder
-		if dialog.runModalForDirectory("/usr/local/Library/Formula", file:"*.rb") == NSOKButton
-		# if we had a allowed for the selection of multiple items
-		# we would have want to loop through the selection
-			destination_path.stringValue = dialog.filenames.first
+	def removeFormula(sender)
+		if @formulasTableView.numberOfSelectedRows != 0
+			@formulas.delete_at(@formulasTableView.selectedRow)
+			@formulasTableView.reloadData
 		end
 	end
+	
 	
 	def get_brewed_formulas
     formulas = %x(/usr/local/bin/brew list).split("\n")
@@ -57,11 +44,23 @@ class Controller
 		return @brewed
 	end
 	
+	
+	def brew_update(sender)
+		message = %x(brew update)
+		alert = NSAlert.new
+		alert.messageText = message
+		alert.alertStyle = NSInformationalAlertStyle
+    alert.addButtonWithTitle("OK")
+    response = alert.runModal
+	end
+	
+	
 	def numberOfRowsInTableView(view)
     @formulas.size
   end
 
-  def tableView(view, objectValueForTableColumn:column, row:index)
+  
+	def tableView(view, objectValueForTableColumn:column, row:index)
     formula = @formulas[index]
     case column.identifier
       when 'formula'
@@ -72,10 +71,10 @@ class Controller
   end
 end
 
+
+
+
 class Formula
   attr_accessor :formula, :version
 	
-	def size
-		return 1
-	end
 end
