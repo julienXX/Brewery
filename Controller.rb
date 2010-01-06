@@ -21,7 +21,12 @@ class Controller
 			@selected_file = dialog.filenames.first.split("/").last.gsub!(/.rb/, "")
 		end
 		
+		@progress.startAnimation(nil)
+		
+		%x(/usr/local/bin/brew install #{@selected_file})
 		@version = %x(/usr/local/bin/brew info #{@selected_file}).split("\n")[0].split(" ")[1]
+		
+		@progress.stopAnimation(nil)
 		
 		new_formula = Formula.new
     new_formula.formula = @selected_file
@@ -57,22 +62,6 @@ class Controller
 	end
 	
 
-	def get_unbrewed_formulas
-    formulas = %x(ls /usr/local/Library/Formula).split("\n")
-		@unbrewed = Array.new
-		
-    formulas.each do |f|
-			@uninstalled = Formula.new
-			f.gsub!(/.rb/,"")
-			@uninstalled.formula = f
-			@uninstalled.version = "tbd"
-			@unbrewed << @uninstalled
-    end
-		puts @unbrewed
-		return @unbrewed
-	end
-
-	
 	def brew_update(sender)
 		@progress.startAnimation(nil)
 		message = %x(brew update)
