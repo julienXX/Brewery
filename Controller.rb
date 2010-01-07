@@ -29,8 +29,8 @@ class Controller
 		@progress.stopAnimation(nil)
 		
 		new_formula = Formula.new
-    new_formula.formula = @selected_file
-    new_formula.version = @version
+			new_formula.formula = @selected_file
+			new_formula.version = @version
     @formulas << new_formula
     @brewedTableView.reloadData
   end
@@ -38,8 +38,20 @@ class Controller
 	
 	def removeFormula(sender)
 		if @brewedTableView.numberOfSelectedRows != 0
-			@formulas.delete_at(@brewedTableView.selectedRow)
-			@brewedTableView.reloadData
+			alert = NSAlert.new
+				alert.messageText = "You are about to remove"
+				alert.alertStyle = NSInformationalAlertStyle
+				alert.addButtonWithTitle("Confirm")
+				alert.addButtonWithTitle("Cancel")
+			response = alert.runModal
+			
+			case response
+			#first button from the right
+			when 1000
+				@formulas.delete_at(@brewedTableView.selectedRow)
+				@brewedTableView.reloadData
+			end
+			#cancel is handled automatically
 		end
 	end
 	
