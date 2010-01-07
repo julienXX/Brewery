@@ -12,6 +12,7 @@ class Controller
 	
 	
   def addFormula(sender)
+		# Open file dialog
 		dialog = NSOpenPanel.openPanel
 		dialog.canChooseFiles = true
 		dialog.canChooseDirectories = false
@@ -20,6 +21,7 @@ class Controller
 		if dialog.runModalForDirectory("/usr/local/Library/Formula", file:nil) == NSOKButton
 			@selected_file = dialog.filenames.first.split("/").last.gsub!(/.rb/, "")
 		end
+		
 		
 		@progress.startAnimation(nil)
 		
@@ -39,19 +41,19 @@ class Controller
 	def removeFormula(sender)
 		if @brewedTableView.numberOfSelectedRows != 0
 			alert = NSAlert.new
-				alert.messageText = "You are about to remove"
+				alert.messageText = "Are you sure?"
 				alert.alertStyle = NSInformationalAlertStyle
 				alert.addButtonWithTitle("Confirm")
 				alert.addButtonWithTitle("Cancel")
 			response = alert.runModal
 			
 			case response
-			#first button from the right
-			when 1000
+			when 1000 #first button from the right, response = confirm
+				selected = @formulas.at(@brewedTableView.selectedRow).formula
+				%x(/usr/local/bin/brew remove #{selected})
 				@formulas.delete_at(@brewedTableView.selectedRow)
 				@brewedTableView.reloadData
 			end
-			#cancel is handled automatically
 		end
 	end
 	
@@ -69,8 +71,6 @@ class Controller
       @installed.version = @version[0].split(" ")[1]
 			@brewed << @installed
     end
-		
-		return @brewed
 	end
 	
 
@@ -78,11 +78,11 @@ class Controller
 		@progress.startAnimation(nil)
 		message = %x(brew update)
 		alert = NSAlert.new
-		alert.messageText = message
-		alert.alertStyle = NSInformationalAlertStyle
-    alert.addButtonWithTitle("OK")
+			alert.messageText = message
+			alert.alertStyle = NSInformationalAlertStyle
+			alert.addButtonWithTitle("OK")
 		@progress.stopAnimation(nil)
-    response = alert.runModal
+    alert.runModal
 	end
 	
 	
