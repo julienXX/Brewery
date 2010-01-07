@@ -58,6 +58,26 @@ class Controller
 	end
 	
 	
+	def updateFormula(sender)
+		if @brewedTableView.numberOfSelectedRows != 0
+			@progress.startAnimation(nil)
+			selected = @formulas.at(@brewedTableView.selectedRow).formula
+			%x(/usr/local/bin/brew install #{selected})
+			@progress.stopAnimation(nil)
+		end
+		
+	end
+	
+	
+	def updateAllFormulas(sender)
+		@progress.startAnimation(nil)
+		@brewed.each do |b|
+			puts %x(/usr/local/bin/brew install #{b.formula})
+		end
+		@progress.stopAnimation(nil)
+	end
+	
+	
 	def get_brewed_formulas
     formulas = %x(/usr/local/bin/brew list).split("\n")
 		@brewed = Array.new
