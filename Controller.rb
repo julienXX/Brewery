@@ -1,9 +1,16 @@
 class Controller
-  attr_writer :brewedTableView
+  attr_writer :brewedTableView, :info_label
 	attr_accessor :progress
 
+
+	def acceptsFirstResponder
+    true
+  end
+	
+	
 	def awakeFromNib
 		@formulas = []
+		@info_label.setStringValue("")
 		
 		get_brewed_formulas
 		@brewed.each {|f| @formulas << f }
@@ -25,10 +32,12 @@ class Controller
 		
 		@progress.startAnimation(nil)
 		
+		@info_label.setStringValue("Installing #{@selected_file}...")
 		%x(/usr/local/bin/brew install #{@selected_file})
 		@version = %x(/usr/local/bin/brew info #{@selected_file}).split("\n")[0].split(" ")[1]
 		
 		@progress.stopAnimation(nil)
+		@info_label.setStringValue("")
 		
 		new_formula = Formula.new
 			new_formula.formula = @selected_file
@@ -62,8 +71,10 @@ class Controller
 		if @brewedTableView.numberOfSelectedRows != 0
 			@progress.startAnimation(nil)
 			selected = @formulas.at(@brewedTableView.selectedRow).formula
+			@info_label.setStringValue("Updating #{selected}...")
 			%x(/usr/local/bin/brew install #{selected})
 			@progress.stopAnimation(nil)
+			@info_label.setStringValue("")
 		end
 		
 	end
@@ -72,9 +83,12 @@ class Controller
 	def updateAllFormulas(sender)
 		@progress.startAnimation(nil)
 		@brewed.each do |b|
+			@info_label.setStringValue("Updating #{b.formula}...")
 			puts %x(/usr/local/bin/brew install #{b.formula})
+			puts @info_label.stringValue()
 		end
 		@progress.stopAnimation(nil)
+		#@info_label.setStringValue("")
 	end
 	
 	
