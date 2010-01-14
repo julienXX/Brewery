@@ -49,6 +49,10 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		F9A443F310FF7D1200C15C1A /* mr_file_handle.rb in Resources */ = {isa = PBXBuildFile; fileRef = F9A443EF10FF7D1200C15C1A /* mr_file_handle.rb */; };
+		F9A443F410FF7D1200C15C1A /* mr_notification_center.rb in Resources */ = {isa = PBXBuildFile; fileRef = F9A443F010FF7D1200C15C1A /* mr_notification_center.rb */; };
+		F9A443F510FF7D1200C15C1A /* mr_task.rb in Resources */ = {isa = PBXBuildFile; fileRef = F9A443F110FF7D1200C15C1A /* mr_task.rb */; };
+		F9A443F610FF7D1200C15C1A /* mr_utils.rb in Resources */ = {isa = PBXBuildFile; fileRef = F9A443F210FF7D1200C15C1A /* mr_utils.rb */; };
 		F9A5D42810F390E00076110A /* Controller.rb in Resources */ = {isa = PBXBuildFile; fileRef = F9A5D42710F390E00076110A /* Controller.rb */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +82,10 @@
 		4DE3BE130D8651D900ECA448 /* MacRuby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MacRuby.framework; path = /Library/Frameworks/MacRuby.framework; sourceTree = "<absolute>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Brewery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Brewery.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F9A443EF10FF7D1200C15C1A /* mr_file_handle.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = mr_file_handle.rb; sourceTree = "<group>"; };
+		F9A443F010FF7D1200C15C1A /* mr_notification_center.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = mr_notification_center.rb; sourceTree = "<group>"; };
+		F9A443F110FF7D1200C15C1A /* mr_task.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = mr_task.rb; sourceTree = "<group>"; };
+		F9A443F210FF7D1200C15C1A /* mr_utils.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = mr_utils.rb; sourceTree = "<group>"; };
 		F9A5D42710F390E00076110A /* Controller.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = Controller.rb; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -140,6 +148,7 @@
 		29B97314FDCFA39411CA2CEA /* Brewery */ = {
 			isa = PBXGroup;
 			children = (
+				F9A443EE10FF7D1200C15C1A /* wrappers */,
 				172754AE1075979200D0347B /* Tests */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -177,6 +186,17 @@
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F9A443EE10FF7D1200C15C1A /* wrappers */ = {
+			isa = PBXGroup;
+			children = (
+				F9A443EF10FF7D1200C15C1A /* mr_file_handle.rb */,
+				F9A443F010FF7D1200C15C1A /* mr_notification_center.rb */,
+				F9A443F110FF7D1200C15C1A /* mr_task.rb */,
+				F9A443F210FF7D1200C15C1A /* mr_utils.rb */,
+			);
+			path = wrappers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -230,6 +250,10 @@
 				4DE339F70D74FCDD00ADB6EE /* rb_main.rb in Resources */,
 				2BFA9DA710CDF852007972A1 /* MainMenu.xib in Resources */,
 				F9A5D42810F390E00076110A /* Controller.rb in Resources */,
+				F9A443F310FF7D1200C15C1A /* mr_file_handle.rb in Resources */,
+				F9A443F410FF7D1200C15C1A /* mr_notification_center.rb in Resources */,
+				F9A443F510FF7D1200C15C1A /* mr_task.rb in Resources */,
+				F9A443F610FF7D1200C15C1A /* mr_utils.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

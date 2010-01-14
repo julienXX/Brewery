@@ -1,3 +1,5 @@
+require 'mr_task'
+
 class Controller
   attr_writer :brewedTableView, :info_label
 	attr_accessor :progress
@@ -29,10 +31,9 @@ class Controller
 			@selected_file = dialog.filenames.first.split("/").last.gsub!(/.rb/, "")
 		end
 		
-		
 		@progress.startAnimation(nil)
-		
 		@info_label.setStringValue("Installing #{@selected_file}...")
+		
 		%x(/usr/local/bin/brew install #{@selected_file})
 		@version = %x(/usr/local/bin/brew info #{@selected_file}).split("\n")[0].split(" ")[1]
 		
