@@ -1,6 +1,6 @@
 # Brewery
 Brewery is graphical interface for the homebrew package management.
-It's in a very alpha state.
+It's in a very alpha state and assumes that brew is in /usr/local/bin.
 
 ![Brewery screenshot](http://img.skitch.com/20100117-xishi6qa1axpcs1khrhnxtcn8s.png "Brewery screenshot")
 

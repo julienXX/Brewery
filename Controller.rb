@@ -85,7 +85,7 @@ class Controller
 		@progress.startAnimation(nil)
 		@brewed.each do |b|
 			@info_label.setStringValue("Updating #{b.formula}...")
-			puts %x(/usr/local/bin/brew install #{b.formula})
+			%x(/usr/local/bin/brew install #{b.formula})
 			puts @info_label.stringValue()
 		end
 		@progress.stopAnimation(nil)
@@ -111,7 +111,7 @@ class Controller
 
 	def brew_update(sender)
 		@progress.startAnimation(nil)
-		message = %x(brew update)
+		message = %x(/usr/local/bin/brew update)
 		alert = NSAlert.new
 			alert.messageText = message
 			alert.alertStyle = NSInformationalAlertStyle
