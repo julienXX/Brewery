@@ -1,0 +1,14 @@
+# Brewery
+Brewery is graphical interface for the homebrew package management.
+It's in a very alpha state.
+
+# Features
+* update Homebrew installation
+* update all formulas
+* update a specific formula
+* install a formula
+* remove a formula
+
+# ToDo
+* add exceptions
+* tests
