@@ -10,5 +10,6 @@ It's in a very alpha state.
 * remove a formula
 
 # ToDo
+* use NSTask for long tasks
 * add exceptions
 * tests
