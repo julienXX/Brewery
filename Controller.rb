@@ -31,20 +31,22 @@ class Controller
 			@selected_file = dialog.filenames.first.split("/").last.gsub!(/.rb/, "")
 		end
 		
-		@progress.startAnimation(nil)
-		@info_label.setStringValue("Installing #{@selected_file}...")
+		if @selected_file
+			@progress.startAnimation(nil)
+			@info_label.setStringValue("Installing #{@selected_file}...")
 		
-		%x(/usr/local/bin/brew install #{@selected_file})
-		@version = %x(/usr/local/bin/brew info #{@selected_file}).split("\n")[0].split(" ")[1]
+			%x(/usr/local/bin/brew install #{@selected_file})
+			@version = %x(/usr/local/bin/brew info #{@selected_file}).split("\n")[0].split(" ")[1]
 		
-		@progress.stopAnimation(nil)
-		@info_label.setStringValue("")
+			@progress.stopAnimation(nil)
+			@info_label.setStringValue("")
 		
-		new_formula = Formula.new
+			new_formula = Formula.new
 			new_formula.formula = @selected_file
 			new_formula.version = @version
-    @formulas << new_formula
-    @brewedTableView.reloadData
+			@formulas << new_formula
+			@brewedTableView.reloadData
+		end
   end
 	
 	
